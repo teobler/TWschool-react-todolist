@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "build/dist",
+    "module": "commonjs",
+    "target": "es2015",
+    "lib": ["es2017", "dom"],
+    "sourceMap": true,
+    "allowJs": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "removeComments": true,
+    "declaration": false,
+    "importHelpers": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": false,
+    "noFallthroughCasesInSwitch": true,
+
+    // react settings
+    "forceConsistentCasingInFileNames": true,
+    "pretty": true,
+//    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+
+
+    // project settings
+//    "sourceMap": false,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+//    "allowJs": false,
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": [
+    "node_modules/*",
+    "build",
+    "scripts",
+    "acceptance-tests",
+    "webpack",
+    "jest",
+    "src/setupTests.ts"
+  ]
+}
