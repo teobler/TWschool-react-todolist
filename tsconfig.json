@@ -19,20 +19,9 @@
     "noImplicitReturns": true,
     "noImplicitThis": false,
     "noFallthroughCasesInSwitch": true,
-
-    // react settings
-    "forceConsistentCasingInFileNames": true,
     "pretty": true,
-//    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "suppressImplicitAnyIndexErrors": true,
-
-
-    // project settings
-//    "sourceMap": false,
     "experimentalDecorators": true,
     "skipLibCheck": true,
-//    "allowJs": false,
     "allowSyntheticDefaultImports": true
   },
   "exclude": [
@@ -41,7 +30,6 @@
     "scripts",
     "acceptance-tests",
     "webpack",
-    "jest",
-    "src/setupTests.ts"
+    "jest"
   ]
 }
