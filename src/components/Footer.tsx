@@ -1,12 +1,13 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import {fliterActionCreator} from '../redux/actions/fliterActionCreator';
+import {filterActionCreator} from '../redux/actions/filterActionCreator';
 import {IFilterItem} from '../redux/reducer/filters';
 import {ITodoItem} from '../redux/redux';
 
 interface IFooterProps {
   completedCount: number;
   filters: IFilterItem[];
+  filter: (label: string) => void;
 }
 
 class Footer extends React.Component<IFooterProps, any> {
@@ -47,9 +48,10 @@ class Footer extends React.Component<IFooterProps, any> {
     return event;
   };
 
-  // TODO: add handle function
   filterButtonClickHandle = (event: any) => {
-    return event;
+    const { filter } = this.props;
+    const displayType = event.target.innerHTML;
+    filter(displayType);
   };
 }
 
@@ -73,8 +75,8 @@ const mapStateToProps = (state: ITodoListState) => {
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-  fliter: (label: string) => {
-    dispatch(fliterActionCreator(label));
+  filter: (label: string) => {
+    dispatch(filterActionCreator(label));
   },
 });
 
