@@ -1,13 +1,16 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
 import {filterActionCreator} from '../redux/actions/filterActionCreator';
+import {clearActionCreator} from '../redux/actions/todoListActionCreator';
 import {IFilterItem} from '../redux/reducer/filters';
 import {ITodoItem} from '../redux/redux';
 
 interface IFooterProps {
+  todos: any,
   completedCount: number;
   filters: IFilterItem[];
   filter: (label: string) => void;
+  clear: (todos: any) => void;
 }
 
 class Footer extends React.Component<IFooterProps, any> {
@@ -44,8 +47,9 @@ class Footer extends React.Component<IFooterProps, any> {
     );
   }
 
-  clearButtonOnClickHandle = (event: any) => {
-    return event;
+  clearButtonOnClickHandle = () => {
+    const {todos, clear} = this.props;
+    clear(todos);
   };
 
   filterButtonClickHandle = (event: any) => {
@@ -71,12 +75,16 @@ const mapStateToProps = (state: ITodoListState) => {
   return {
     completedCount,
     filters,
+    todos:state.todoListReducer,
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
   filter: (label: string) => {
     dispatch(filterActionCreator(label));
+  },
+  clear: (todos: any) => {
+    dispatch(clearActionCreator(todos));
   },
 });
 

@@ -38,6 +38,11 @@ export const todoListReducer = (state: any = initialState, action: ITodoListActi
       });
       newState.splice(action.index, 1);
       return newState;
+    case ACTION_TYPE.CLEAR:
+      const activeState = state.filter((todoItem: ITodoItem) => {
+        return !todoItem.completed;
+      });
+      return activeState;
     default:
       return state;
   }

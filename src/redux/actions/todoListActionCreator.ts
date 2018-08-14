@@ -13,5 +13,9 @@ export const deleteItemActionCreator = (index: number) => {
 };
 
 export const toggleAllActionCreator = (check: boolean) => {
-  return {type: ACTION_TYPE.TOGGLE_ALL, check}
+  return {type: ACTION_TYPE.TOGGLE_ALL, check};
+};
+
+export const clearActionCreator = (todos: any) => {
+  return {type: ACTION_TYPE.CLEAR, todos};
 };
