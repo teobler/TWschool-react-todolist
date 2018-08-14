@@ -19,3 +19,7 @@ export const toggleAllActionCreator = (check: boolean) => {
 export const clearActionCreator = (todos: any) => {
   return {type: ACTION_TYPE.CLEAR, todos};
 };
+
+export const updateItemActionCreator = (label: string) => {
+  return {type: ACTION_TYPE.UPDATE, label};
+};

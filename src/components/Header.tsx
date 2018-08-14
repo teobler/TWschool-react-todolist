@@ -2,7 +2,7 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import {todoListActionCreator} from '../redux/actions/todoListActionCreator';
 
-const ENTER_KEY_CODE = 13;
+export const ENTER_KEY_CODE = 13;
 
 class Header extends React.Component<any, any> {
   render() {

@@ -5,4 +5,5 @@ export const ACTION_TYPE = {
   DELETE: 'DELETE',
   SWITCH_FILTER: 'SWITCH_FILTER',
   CLEAR: 'CLEAR',
+  UPDATE: 'UPDATE',
 };

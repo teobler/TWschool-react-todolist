@@ -39,10 +39,13 @@ export const todoListReducer = (state: any = initialState, action: ITodoListActi
       newState.splice(action.index, 1);
       return newState;
     case ACTION_TYPE.CLEAR:
-      const activeState = state.filter((todoItem: ITodoItem) => {
+      return state.filter((todoItem: ITodoItem) => {
         return !todoItem.completed;
       });
-      return activeState;
+    case ACTION_TYPE.UPDATE:
+      return state.map((todoItem: ITodoItem) => {
+        return Object.assign({}, todoItem, {label: action.label});
+      });
     default:
       return state;
   }
