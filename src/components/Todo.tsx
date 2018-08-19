@@ -13,15 +13,23 @@ interface ITodoProps {
   idx: number;
   toggle: (index: number) => void;
   deleteItem: (index: number) => void;
-  updateTodo: (label: string) => void;
+  updateTodo: (label: string, index: number) => void;
 }
 
 class Todo extends React.Component<ITodoProps, any> {
+  private todoItemInput: any;
   constructor(props: ITodoProps) {
     super(props);
+    this.todoItemInput = React.createRef();
     this.state = {
       editing: false,
     };
+  }
+
+  componentDidUpdate(){
+    if (this.todoItemInput) {
+      this.todoItemInput.current.focus();
+    }
   }
 
   render() {
@@ -44,18 +52,26 @@ class Todo extends React.Component<ITodoProps, any> {
           <button className='destroy' onClick={this.deleteItemClickHandle}/>
         </div>
         <input className='edit'
-               defaultValue={todoItem.label}
-               onKeyDown={this.labelInputKeyPressHandle}/>
+               value={todoItem.label}
+               ref={this.todoItemInput}
+               onKeyDown={this.labelInputKeyPressHandle}
+               onBlur={this.labelInputBlurHandle}/>
       </li>
     )
   }
 
-
-  // FIXME: need a index in state;
   labelInputKeyPressHandle = (event: any) => {
-    const {updateTodo} = this.props;
-    if (event.target.keyCode === ENTER_KEY_CODE && event.target.value.trim() !== '') {
-      updateTodo(event.target.value.trim());
+    const {updateTodo, idx} = this.props;
+    if (event.keyCode === ENTER_KEY_CODE && event.target.value.trim() !== '') {
+      updateTodo(event.target.value.trim(), idx);
+      this.setState({editing: false});
+    }
+  };
+
+  labelInputBlurHandle = (event: any) => {
+    const {updateTodo, idx} = this.props;
+    if (event.target.value.trim() !== '') {
+      updateTodo(event.target.value.trim(), idx);
       this.setState({editing: false});
     }
   };
@@ -84,8 +100,8 @@ const mapDispatchToProps = (dispatch: any) => ({
   deleteItem: (index: number) => {
     dispatch(deleteItemActionCreator(index));
   },
-  updateTodo: (label: string) => {
-    dispatch(updateItemActionCreator(label));
+  updateTodo: (label: string, index: number) => {
+    dispatch(updateItemActionCreator(label, index));
   },
 });
 

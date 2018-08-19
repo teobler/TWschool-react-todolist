@@ -16,8 +16,6 @@ interface IFooterProps {
 class Footer extends React.Component<IFooterProps, any> {
   render() {
     const {filters, completedCount} = this.props;
-    // tslint:disable-next-line:no-console
-    console.log(this.props, '=======================footer');
     return (
       <footer className='footer'>
         <span className='todo-count'><strong>{this.props.completedCount}</strong> item left</span>

@@ -14,8 +14,6 @@ export interface ITodoListProps {
 
 class TodoList extends React.Component<ITodoListProps, any> {
   render() {
-    // tslint:disable-next-line:no-console
-    console.log(this.props, '=======================todolist');
     const {todos, allComplete} = this.props;
     return (
       <section className='main'>
@@ -58,8 +56,6 @@ const getVisibleTodos = (todoListReducer: any, filters: IFilterItem[]) => {
 };
 
 const mapStateToProps = ({todoListReducer, filters}: any) => {
-  // tslint:disable-next-line:no-console
-  console.log(todoListReducer, '=======================todolist todos');
   return {
     todos: getVisibleTodos(todoListReducer, filters),
     allComplete: todoListReducer.every((todoItem: any) => todoItem.completed),

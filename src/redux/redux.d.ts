@@ -7,4 +7,5 @@ export interface IAddTodoAction {
 export interface ITodoItem {
   label: string;
   completed: boolean;
+  index: number;
 }

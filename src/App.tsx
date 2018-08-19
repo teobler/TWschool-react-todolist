@@ -12,8 +12,6 @@ import './App.css';
 
 class App extends React.Component<any, any> {
   render() {
-    // tslint:disable-next-line:no-console
-    console.log(this.props, '=======================app');
     return (
       <section className='todoapp'>
         <Header />

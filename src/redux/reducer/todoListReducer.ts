@@ -2,8 +2,8 @@ import {ACTION_TYPE} from '../actions/ACTION_TYPE';
 import {ITodoItem} from '../redux';
 
 export const initialState: any = [
-  { label: 'react', completed: true},
-  { label: 'react-dom', completed: false}
+  { label: 'react', completed: true, index: 0},
+  { label: 'react-dom', completed: false, index: 1}
 ];
 
 interface ITodoListAction {
@@ -22,6 +22,7 @@ export const todoListReducer = (state: any = initialState, action: ITodoListActi
         {
           label: action.label,
           completed: false,
+          index: state.length,
         },
       ];
     case ACTION_TYPE.TOGGLE:
@@ -37,14 +38,25 @@ export const todoListReducer = (state: any = initialState, action: ITodoListActi
         return Object.assign({}, todoItem);
       });
       newState.splice(action.index, 1);
+      newState.forEach((todoItem: ITodoItem, index: number) => {
+        todoItem.index = index;
+      });
       return newState;
     case ACTION_TYPE.CLEAR:
-      return state.filter((todoItem: ITodoItem) => {
+      const remainState = state.filter((todoItem: ITodoItem) => {
         return !todoItem.completed;
       });
+      remainState.forEach((todoItem: ITodoItem, index: number) => {
+        todoItem.index = index;
+      });
+      return remainState;
     case ACTION_TYPE.UPDATE:
-      return state.map((todoItem: ITodoItem) => {
-        return Object.assign({}, todoItem, {label: action.label});
+      return state.map((todoItem: ITodoItem, index: number) => {
+        if (index === action.index) {
+          return Object.assign({}, todoItem, {label: action.label});
+        } else {
+          return Object.assign({}, todoItem);
+        }
       });
     default:
       return state;

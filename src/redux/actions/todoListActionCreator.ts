@@ -20,6 +20,6 @@ export const clearActionCreator = (todos: any) => {
   return {type: ACTION_TYPE.CLEAR, todos};
 };
 
-export const updateItemActionCreator = (label: string) => {
-  return {type: ACTION_TYPE.UPDATE, label};
+export const updateItemActionCreator = (label: string, index: number) => {
+  return {type: ACTION_TYPE.UPDATE, label, index};
 };
