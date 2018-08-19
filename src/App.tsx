@@ -8,7 +8,6 @@ import {IAddTodoAction} from './redux/redux';
 import 'todomvc-app-css/index.css';
 import 'todomvc-common/base';
 import 'todomvc-common/base.css';
-import './App.css';
 
 class App extends React.Component<any, any> {
   render() {
