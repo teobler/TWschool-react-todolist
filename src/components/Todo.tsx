@@ -26,8 +26,10 @@ class Todo extends React.Component<ITodoProps, any> {
     };
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     if (this.todoItemInput) {
+      // props have changed but input's value not change
+      this.todoItemInput.current.value = this.props.todoItem.label;
       this.todoItemInput.current.focus();
     }
   }
@@ -52,7 +54,7 @@ class Todo extends React.Component<ITodoProps, any> {
           <button className='destroy' onClick={this.deleteItemClickHandle}/>
         </div>
         <input className='edit'
-               value={todoItem.label}
+               defaultValue={todoItem.label}
                ref={this.todoItemInput}
                onKeyDown={this.labelInputKeyPressHandle}
                onBlur={this.labelInputBlurHandle}/>
