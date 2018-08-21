@@ -1,21 +1,11 @@
 import {ACTION_TYPE} from '../actions/ACTION_TYPE';
+import {IFilterItem, ISwitchFilterAction} from '../redux';
 
 const initState = [
   { label: 'All', selected: true },
   { label: 'Completed' },
   { label: 'Active' }
 ];
-
-export interface IFilterItem {
-  label: string;
-  selected?: boolean;
-}
-
-interface ISwitchFilterAction {
-  type: string;
-  label: string;
-  selected?: boolean;
-}
 
 const filters = (state: IFilterItem[] = initState, action: ISwitchFilterAction) => {
   switch(action.type) {

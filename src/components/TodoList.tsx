@@ -1,16 +1,10 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
+import {Dispatch} from 'redux';
 import {toggleAllActionCreator} from '../redux/actions/todoListActionCreator';
-import {IFilterItem} from '../redux/reducer/filters';
-import {ITodoItem} from '../redux/redux';
+import {IFilterItem, ITodoItem} from '../redux/redux';
+import {ITodoListMapProps, ITodoListProps} from './component';
 import Todo from './Todo';
-
-export interface ITodoListProps {
-  todoListReducer: ITodoItem[];
-  todos: ITodoItem[];
-  allComplete: boolean;
-  toggleAll: (check: boolean) => void;
-}
 
 class TodoList extends React.Component<ITodoListProps, any> {
   render() {
@@ -37,32 +31,35 @@ class TodoList extends React.Component<ITodoListProps, any> {
     );
   }
 
-  checkboxChangeHandle = (event: any) => {
+  checkboxChangeHandle = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {toggleAll} = this.props;
-    toggleAll(event.target.checked);
+    toggleAll(event.currentTarget.checked);
   };
 }
 
-const getVisibleTodos = (todoListReducer: any, filters: IFilterItem[]) => {
+const getVisibleTodos = (todoListReducer: ITodoItem[], filters: IFilterItem[]) => {
+  // FIXME: type
   const filter = (filters.find(item => item.selected as boolean) as IFilterItem).label;
   switch (filter) {
     case 'All':
       return todoListReducer;
     case 'Completed':
-      return todoListReducer.filter((item: any) => item.completed);
+      return todoListReducer.filter((item: ITodoItem) => item.completed);
     case 'Active':
-      return todoListReducer.filter((item: any) => !item.completed);
+      return todoListReducer.filter((item: ITodoItem) => !item.completed);
+    default:
+      return todoListReducer;
   }
 };
 
-const mapStateToProps = ({todoListReducer, filters}: any) => {
+const mapStateToProps = ({todoListReducer, filters}: ITodoListMapProps) => {
   return {
     todos: getVisibleTodos(todoListReducer, filters),
-    allComplete: todoListReducer.every((todoItem: any) => todoItem.completed),
+    allComplete: todoListReducer.every((todoItem: ITodoItem) => todoItem.completed),
   };
 };
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggleAll: (check: boolean) => {
     dispatch(toggleAllActionCreator(check));
   },

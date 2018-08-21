@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
+import {Dispatch} from 'redux';
 import {todoListActionCreator} from '../redux/actions/todoListActionCreator';
 
 export const ENTER_KEY_CODE = 13;
@@ -17,18 +18,18 @@ class Header extends React.Component<any, any> {
     );
   }
 
-  keyPressHandle = (event: any) => {
+  keyPressHandle = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const {addTodo} = this.props;
-    if (event.keyCode === ENTER_KEY_CODE && event.target.value !== '') {
-      addTodo(event.target.value);
-      event.target.value = '';
+    if (event.keyCode === ENTER_KEY_CODE && event.currentTarget.value !== '') {
+      addTodo(event.currentTarget.value);
+      event.currentTarget.value = '';
     }
   };
 }
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   addTodo: (label: string) => {
     dispatch(todoListActionCreator(label));
   },

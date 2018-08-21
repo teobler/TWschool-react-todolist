@@ -1,23 +1,16 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
+import {Dispatch} from 'redux';
 import {
   deleteItemActionCreator,
   toggleActionCreator,
   updateItemActionCreator
 } from '../redux/actions/todoListActionCreator';
-import {ITodoItem} from '../redux/redux';
+import {ITodoProps} from './component';
 import {ENTER_KEY_CODE} from './Header';
 
-interface ITodoProps {
-  todoItem: ITodoItem;
-  idx: number;
-  toggle: (index: number) => void;
-  deleteItem: (index: number) => void;
-  updateTodo: (label: string, index: number) => void;
-}
-
 class Todo extends React.Component<ITodoProps, any> {
-  private todoItemInput: any;
+  private readonly todoItemInput: React.RefObject<HTMLInputElement>;
   constructor(props: ITodoProps) {
     super(props);
     this.todoItemInput = React.createRef();
@@ -27,10 +20,10 @@ class Todo extends React.Component<ITodoProps, any> {
   }
 
   componentDidUpdate() {
-    if (this.todoItemInput) {
-      // props have changed but input's value not change
-      this.todoItemInput.current.value = this.props.todoItem.label;
-      this.todoItemInput.current.focus();
+    if (Object.keys(this.todoItemInput).length > 0) {
+      // FIXME:props have changed but input's value not change
+      (this.todoItemInput.current as HTMLInputElement).value = this.props.todoItem.label;
+      (this.todoItemInput.current as HTMLInputElement).focus();
     }
   }
 
@@ -62,15 +55,15 @@ class Todo extends React.Component<ITodoProps, any> {
     )
   }
 
-  labelInputKeyPressHandle = (event: any) => {
+  labelInputKeyPressHandle = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const {updateTodo, idx} = this.props;
-    if (event.keyCode === ENTER_KEY_CODE && event.target.value.trim() !== '') {
-      updateTodo(event.target.value.trim(), idx);
+    if (event.keyCode === ENTER_KEY_CODE && event.currentTarget.value.trim() !== '') {
+      updateTodo(event.currentTarget.value.trim(), idx);
       this.setState({editing: false});
     }
   };
 
-  labelInputBlurHandle = (event: any) => {
+  labelInputBlurHandle = (event: React.FocusEvent<HTMLInputElement>) => {
     const {updateTodo, idx} = this.props;
     if (event.target.value.trim() !== '') {
       updateTodo(event.target.value.trim(), idx);
@@ -95,7 +88,7 @@ class Todo extends React.Component<ITodoProps, any> {
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggle: (index: number) => {
     dispatch(toggleActionCreator(index));
   },

@@ -1,17 +1,10 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
+import {Dispatch} from 'redux';
 import {filterActionCreator} from '../redux/actions/filterActionCreator';
 import {clearActionCreator} from '../redux/actions/todoListActionCreator';
-import {IFilterItem} from '../redux/reducer/filters';
-import {ITodoItem} from '../redux/redux';
-
-interface IFooterProps {
-  todos: any,
-  completedCount: number;
-  filters: IFilterItem[];
-  filter: (label: string) => void;
-  clear: (todos: any) => void;
-}
+import {IFilterItem, ITodoItem} from '../redux/redux';
+import {IFooterProps, ITodoListState} from './component';
 
 class Footer extends React.Component<IFooterProps, any> {
   render() {
@@ -37,7 +30,7 @@ class Footer extends React.Component<IFooterProps, any> {
         {
           completedCount > 0 ?
             <button className='clear-completed'
-                    onClick={this.clearButtonOnClickHandle}>
+                    onClick={this.clearButtonClickHandle}>
               Clear completed
             </button> : null
         }
@@ -45,21 +38,16 @@ class Footer extends React.Component<IFooterProps, any> {
     );
   }
 
-  clearButtonOnClickHandle = () => {
+  clearButtonClickHandle = () => {
     const {todos, clear} = this.props;
     clear(todos);
   };
 
-  filterButtonClickHandle = (event: any) => {
+  filterButtonClickHandle = (event: React.MouseEvent) => {
     const { filter } = this.props;
-    const displayType = event.target.innerHTML;
+    const displayType = event.currentTarget.innerHTML;
     filter(displayType);
   };
-}
-
-interface ITodoListState {
-  todoListReducer: ITodoItem[];
-  filters: IFilterItem[];
 }
 
 const mapStateToProps = (state: ITodoListState) => {
@@ -69,19 +57,19 @@ const mapStateToProps = (state: ITodoListState) => {
       completedCount++;
     }
   });
-  const {filters} = state;
+  const {filters, todoListReducer: todos} = state;
   return {
-    completedCount,
+    completedCount: todos.length - completedCount,
     filters,
-    todos:state.todoListReducer,
+    todos,
   };
 };
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   filter: (label: string) => {
     dispatch(filterActionCreator(label));
   },
-  clear: (todos: any) => {
+  clear: (todos: ITodoItem[]) => {
     dispatch(clearActionCreator(todos));
   },
 });

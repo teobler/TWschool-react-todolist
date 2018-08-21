@@ -1,20 +1,12 @@
 import {ACTION_TYPE} from '../actions/ACTION_TYPE';
-import {ITodoItem} from '../redux';
+import {ITodoItem, ITodoListAction} from '../redux';
 
-export const initialState: any = [
+export const initialState = [
   { label: 'react', completed: true, index: 0},
   { label: 'react-dom', completed: false, index: 1}
 ];
 
-interface ITodoListAction {
-  type: string;
-  label?: string;
-  completed?: boolean;
-  index?: number;
-  check?: boolean;
-}
-
-export const todoListReducer = (state: any = initialState, action: ITodoListAction) => {
+export const todoListReducer = (state: ITodoItem[] = initialState, action: ITodoListAction) => {
   switch (action.type) {
     case ACTION_TYPE.ADD_TODO:
       return [
