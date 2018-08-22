@@ -1,13 +1,13 @@
 import {ACTION_TYPE} from '../actions/ACTION_TYPE';
 import {IFilterItem, ISwitchFilterAction} from '../redux';
 
-const initState = [
+export const filterInitState = [
   { label: 'All', selected: true },
-  { label: 'Completed' },
-  { label: 'Active' }
+  { label: 'Completed', selected: false },
+  { label: 'Active', selected: false }
 ];
 
-const filters = (state: IFilterItem[] = initState, action: ISwitchFilterAction) => {
+const filters = (state: IFilterItem[] = filterInitState, action: ISwitchFilterAction) => {
   switch(action.type) {
     case ACTION_TYPE.SWITCH_FILTER:
       return state.map((filterItem: IFilterItem)=> {

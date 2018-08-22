@@ -38,8 +38,7 @@ class TodoList extends React.Component<ITodoListProps, any> {
 }
 
 const getVisibleTodos = (todoListReducer: ITodoItem[], filters: IFilterItem[]) => {
-  // FIXME: type
-  const filter = (filters.find(item => item.selected as boolean) as IFilterItem).label;
+  const filter = (filters.find(item => item.selected) || {label: 'All', selected: true}).label;
   switch (filter) {
     case 'All':
       return todoListReducer;

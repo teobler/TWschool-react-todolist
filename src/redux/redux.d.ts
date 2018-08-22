@@ -20,7 +20,7 @@ export interface ITodoListAction {
 
 export interface IFilterItem {
   label: string;
-  selected?: boolean;
+  selected: boolean;
 }
 
 interface ISwitchFilterAction {
